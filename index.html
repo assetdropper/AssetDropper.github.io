@@ -159,13 +159,19 @@
 
 
   <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <img src="static/images/teaser.jpg" width="110%">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <figure>
+              <img src="static/images/teaser.jpg" width="110%">
+              <figcaption style="font-size: 1rem; color: #666; margin-top: 8px;">
+                <b>AssetDropper</b>, a novel model designed to extract assets from user-specified image regions. The extracted assets can
+seamlessly be applied to various downstream tasks in design and visualization workflows, e.g., 2D mockup creation and 3D model texturing.
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </div>
-    </div>
   </section>
 
   <br></br>
@@ -196,6 +202,28 @@
 
   <section class="section">
     <div class="container is-max-desktop">
+      <!-- Method Overview. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3" style="color: #446bdf;">Method Overview</h2>
+          <div style="height: 5px; width: 25px; background: #e5525a; margin: 8px auto 25px auto;"></div>
+          <div class="content has-text-justified">
+            <img src="static/images/Pipeline.jpg" width="100%">
+            <p>
+            <br>
+            <b>Overview of the AssetDropper framework.</b> For the input reference image x<sub>r</sub>, we obtain the asset's mask m through Grounding DINO, and further obtain the masked image x<sub>m</sub> and the edge map x<sub>e</sub> of the asset through the mask. The corresponding standardized asset is denoted by x<sub>a</sub>. Networks with the same color represent the same model (blue for SDXL UNet, red for SDXL-Inpainting UNet). We first use FeatureNet, a UNet that encodes the low-level features of the input x<sub>r</sub>, m, and x<sub>e</sub>.
+            We then use IP-Adapter to encode high-level semantics of the masked image x<sub>m</sub>. ExtractNet is the main UNet that serves as our generator, processing noisy data x<sub>a,t</sub>. A detailed text prompt of the asset is provided by GPT-4o for both FeatureNet and ExtractNet, where [V] denotes the subject, e.g., "a surreal fusion of cherries and skulls, blending natural and macabre elements." We train a model with the same architecture as AssetDropperNet to perform the inverse task, reattaching the extracted asset back to the reference image while masking the inpainted area. This model is then used as our pre-trained reward model.  
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Method Overview. -->
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column">
           <h2 class="title is-3" style="color: #446bdf;">Video</h2>
@@ -212,33 +240,17 @@
 
   <section class="section">
     <div class="container is-max-desktop">
-      <!-- Method Overview. -->
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3" style="color: #446bdf;">Method Overview</h2>
-          <div style="height: 5px; width: 25px; background: #e5525a; margin: 8px auto 25px auto;"></div>
-          <div class="content has-text-justified">
-            <img src="static/images/Pipeline.jpg" width="100%">
-            <p>
-            <b>Overview of the AssetDropper framework.</b> For the input reference image x<sub>r</sub>, we obtain the asset's mask m through Grounding DINO, and further obtain the masked image x<sub>m</sub> and the edge map x<sub>e</sub> of the asset through the mask. The corresponding standardized asset is denoted by x<sub>a</sub>. Networks with the same color represent the same model (blue for SDXL UNet, red for SDXL-Inpainting UNet). We first use FeatureNet, a UNet that encodes the low-level features of the input x<sub>r</sub>, m, and x<sub>e</sub>.
-            We then use IP-Adapter to encode high-level semantics of the masked image x<sub>m</sub>. ExtractNet is the main UNet that serves as our generator, processing noisy data x<sub>a,t</sub>. A detailed text prompt of the asset is provided by GPT-4o for both FeatureNet and ExtractNet, where [V] denotes the subject, e.g., "a surreal fusion of cherries and skulls, blending natural and macabre elements." We train a model with the same architecture as AssetDropperNet to perform the inverse task, reattaching the extracted asset back to the reference image while masking the inpainted area. This model is then used as our pre-trained reward model.  
-            </p>
-          </div>
-        </div>
-      </div>
-      <!--/ Method Overview. -->
-
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3" style="color: #446bdf;">Results</h2>
           <div style="height: 5px; width: 25px; background: #e5525a; margin: 8px auto 25px auto;"></div>
           <div class="content has-text-justified">
             <img src="static/images/Results.jpg" width="100%">
+            <br>
+            <p>
+            Qualitative results on in-the-wild images. For each image block, the first row is the input reference image, and the second row is the output of
+            <b>AssetDropper</b>.
+            </p>
           </div>
         </div>
       </div>
@@ -253,6 +265,11 @@
           <div style="height: 5px; width: 25px; background: #e5525a; margin: 8px auto 25px auto;"></div>
           <div class="content has-text-justified">
             <img src="static/images/Comparison.jpg" width="100%">
+            <br>
+            <p>
+            Qualitative comparison in SAP synthetic test dataset. For the synthetic test dataset, we selected three different meshes corresponding to three varying
+levels of surface curvature. Our method achieves asset extraction results that are close to the ground truth.
+            </p>
           </div>
         </div>
       </div>
